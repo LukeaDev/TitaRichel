@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Tita Richel!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #e8eaff, #f4f7ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #ffffff;
+      width: 90%;
+      max-width: 600px;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #2d2d2d;
+    }
+
+    p {
+      line-height: 1.6;
+      color: #4a4a4a;
+    }
+
+    .signature {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    /* Simple floating animation */
+    .balloon {
+      width: 24px;
+      height: 32px;
+      background: #7b61ff;
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      bottom: -40px;
+      animation: float 4s ease-in-out infinite;
+      opacity: 0.8;
+    }
+
+    .b1 { left: 20px; animation-delay: 0s; }
+    .b2 { left: 80px; animation-delay: 0.6s; background: #5fa8ff; }
+    .b3 { left: 140px; animation-delay: 1.2s; background: #a183ff; }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-25px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Confetti */
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .btn {
+      margin-top: 18px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      background: #7b61ff;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <canvas id="confetti"></canvas>
+
+  <h1>Happy Birthday, Tita Richel!</h1>
+  <p>Dear Tita Richel,</p>
+  <p>I hope your special day brings you all the joy and peace you deserve. Thank you for being such a warm, kind, and caring person.
+    You’ve always shown so much love and support, and I truly appreciate everything you do. </p>
+  <p>I’m wishing you a year filled with good health, happiness, and moments that make you smile. You deserve all the good things life has to offer.</p>
+
+  <p class="signature">With love,<br>Luke</p>
+
+  <button class="btn" onclick="celebrate()">Celebrate 🎉</button>
+
+  <div class="balloon b1"></div>
+  <div class="balloon b2"></div>
+  <div class="balloon b3"></div>
+</div>
+
+<script>
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  canvas.width = canvas.parentElement.clientWidth;
+  canvas.height = canvas.parentElement.clientHeight;
+
+  let confettiPieces = [];
+
+  function createConfettiPiece() {
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 6 + 4,
+      speed: Math.random() * 2 + 1,
+      color: `hsl(${Math.random() * 360}, 70%, 60%)`
+    };
+  }
+
+  function celebrate() {
+    confettiPieces = Array.from({ length: 60 }, createConfettiPiece);
+    animate();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confettiPieces.forEach((p, i) => {
+      p.y += p.speed;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+      if (p.y > canvas.height) confettiPieces[i] = createConfettiPiece();
+    });
+
+    if (confettiPieces.length) requestAnimationFrame(animate);
+  }
+</script>
+
+</body>
+</html>
